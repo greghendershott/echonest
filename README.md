@@ -69,7 +69,6 @@ function using this library.
 See [The Echo Nest API][] for details on the acceptable values, and
 various specific usage examples (in curl style).
 
-# Implementation
 
 [The Echo Nest API]: http://developer.echonest.com/docs/v4
-[wiff]: https://github.com/greghendershott/wffi
+[wffi]: https://github.com/greghendershott/wffi
