@@ -1,5 +1,5 @@
-This provides Racket wrapper functions around the
-[The Echo Nest API](http://developer.echonest.com/).
+This provides Racket wrapper functions around version 4 of
+[The Echo Nest API][].
 
 > **NOTE:** This is version 0.1 quality. I haven't yet had time to use
 > it extensively in real applications. If you have any problems, please
@@ -7,9 +7,7 @@ This provides Racket wrapper functions around the
 
 # Install
 
-```sh
-$ raco pkg install echonest
-```
+    $ raco pkg install echonest
 
 You may be prompted to install a couple other packages.
 
@@ -18,17 +16,60 @@ You may be prompted to install a couple other packages.
 You will need to get an Echo Nest API key and put it in
 `~/.echonest-api-key`:
 
-```sh
-API Key=ASDFASDFASDFASDF
-```
+    API Key=ASDFASDFASDFASDF
 
 # Usage
 
-See `echonest.md` for the list of functions. See `test.rkt` for an
-example of calling each one (as part of the unit tests).
+This library uses [wffi][]. As a result, the actual Racket code is
+tiny. The actual payload is a Markdown format file describing each API
+resource, from each of which a Racket wrapper function is generated.
+
+A wffi Markdown file uses a "literate programming" style where a web
+API's documentation _is_ its specification. For example:
+
+    # Catalog Play
+    ## Request
+    ````
+    GET /catalog/play
+        ?api_key={}
+        format=json
+        id={}
+        item={}
+        [plays={}]
+    ````
+
+This describes a web API resource. It results in the definition of a
+Racket function `catalog-play`. You should call it with the required
+parameters `id` and `item`. The `plays` parameter is in brackets,
+meaning that it is optional.
+
+```racket
+(catalog-play 'id "ASDFASDFASDF" 'item "ASDFASDFADS")
+(catalog-play 'id "ASDFASDFASDF" 'item "ASDFASDFADS" 'plays 10)
+```
+
+What about the required parameter `api_key`? Although it is required
+by The Echo Nest API, this library supplies it for you automatically.
+
+What's the deal with `format=json`? This library wants/expects only
+JSON responses from The Echo Nest. So the `json` value is a constant
+hardcoded in the definition file; that way you don't have to supply
+it.
+
+> **NOTE**: I didn't copy and paste all of The Echo Nest documentation
+> into this file. You'll need to see [The Echo Nest API][] for
+> that. In other words, this library is using wffi not for "literal"
+> spec-is-documentation, but rather just for the spec part.
+
+# Examples
+
+See the unit tests in `test.rkt` for an example of calling each API
+function using this library.
+
+See [The Echo Nest API][] for details on the acceptable values, and
+various specific usage examples (in curl style).
 
 # Implementation
 
-This uses [wffi]. As a result, the actual Racket code is tiny. The
-bulk of is a Markdown format file describing each API, from which each
-Racket wrapper function is generated.
+[The Echo Nest API]: http://developer.echonest.com/docs/v4
+[wiff]: https://github.com/greghendershott/wffi
