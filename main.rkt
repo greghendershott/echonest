@@ -1,7 +1,6 @@
 #lang rackjure
 
-(require wffi/client
-         wffi/markdown)
+(require wffi/client)
 
 (provide (all-defined-out))
 
