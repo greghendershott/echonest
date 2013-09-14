@@ -388,10 +388,12 @@ GET /track/profile
 # Track Upload URL
 ## Request
 ````
-GET /track/upload
+POST /track/upload
     ?api_key={}
     format=json
     url={}
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 0
 ````
 
 # Track Upload File
