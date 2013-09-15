@@ -18,6 +18,73 @@ You will need to get an Echo Nest API key and put it in
 
     API Key=ASDFASDFASDFASDF
 
+# Quick Check
+
+A quick check that you installed and configured OK:
+
+```racket
+#lang racket
+(require echonest)
+(artist-list-genres)
+```
+
+Should print JSON (as represented by Racket's `json` module) something
+like this:
+
+```racket
+'#hasheq((response
+          .
+          #hasheq((status
+                   .
+                   #hasheq((version . "4.2") (code . 0) (message . "Success")))
+                  (genres
+                   .
+                   (#hasheq((name . "a cappella"))
+                    #hasheq((name . "abstract hip hop"))
+                    #hasheq((name . "acid house"))
+                    #hasheq((name . "acid jazz"))
+                    #hasheq((name . "acousmatic"))
+                    #hasheq((name . "acoustic blues"))
+                    #hasheq((name . "acoustic pop"))
+                    #hasheq((name . "african percussion"))
+                    #hasheq((name . "african rock"))
+                    #hasheq((name . "afrobeat"))
+                    #hasheq((name . "afrobeats"))
+                    #hasheq((name . "aggrotech"))
+                    #hasheq((name . "albanian pop"))
+...
+```
+
+You can use `#lang rackjure`'s threading macros and applicable
+`dict`s to make it easier to work with JSON:
+
+```racket
+#lang rackjure
+(require echonest)
+(~>> (artist-list-genres) 'response 'genres ;genres list of hashes
+     (map hash-values)                      ;just the hashes' values
+     append*)                               ;((a) (b) ...) => (a b ...)
+```
+
+Result:
+
+```racket
+'("a cappella"
+  "abstract hip hop"
+  "acid house"
+  "acid jazz"
+  "acousmatic"
+  "acoustic blues"
+  "acoustic pop"
+  "african percussion"
+  "african rock"
+  "afrobeat"
+  "afrobeats"
+  "aggrotech"
+  "albanian pop"
+  ... )
+ ```
+
 # Usage
 
 This library uses [wffi][]. As a result, the actual Racket code is
