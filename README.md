@@ -99,10 +99,10 @@ API's documentation _is_ its specification. For example:
     ````
     GET /catalog/play
         ?api_key={}
-        format=json
-        id={}
-        item={}
-        [plays={}]
+        &format=json
+        &id={}
+        &item={}
+        &[plays={}]
     ````
 
 This describes a web API resource. It results in the definition of a
@@ -125,8 +125,8 @@ it.
 
 > **NOTE**: I didn't copy and paste all of The Echo Nest documentation
 > into this file. You'll need to see [The Echo Nest API][] for
-> that. In other words, this library is using wffi not for "literal"
-> spec-is-documentation, but rather just for the spec part.
+> that. In other words, this library is using wffi not for the full
+> literal spec-is-documentation, but rather just for the spec part.
 
 # Examples
 
